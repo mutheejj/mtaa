@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "551391837692",
+    "project_id": "mtaa-7a476",
+    "storage_bucket": "mtaa-7a476.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551391837692:android:cb3f3aa516419dec87c679",
+        "android_client_info": {
+          "package_name": "com.example.mtaa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHxy0GvvGwvvwELnES675g_2yhPf5akB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
