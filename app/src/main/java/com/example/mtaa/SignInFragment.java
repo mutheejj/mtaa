@@ -1,6 +1,7 @@
 package com.example.mtaa;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,35 +17,34 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.example.mtaa.databinding.FragmentSignInBinding;
 
 public class SignInFragment extends Fragment {
-    private FirebaseAuth mAuth;
     private FragmentSignInBinding binding;
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
-
-        // Initialize views
-        TextView forgotPasswordLink = view.findViewById(R.id.forgot_password_link);
-        
-        // Set click listener for forgot password
-        forgotPasswordLink.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(view);
-            navController.navigate(R.id.action_signInFragment_to_resetPasswordFragment);
-        });
-
-        mAuth = FirebaseAuth.getInstance();
-        
-        // Use binding to access views
+        // Initialize view binding
         binding = FragmentSignInBinding.inflate(inflater, container, false);
-        
+        View view = binding.getRoot();
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        // Set click listeners
         binding.btnSignIn.setOnClickListener(v -> signIn());
         
+        binding.btnBack.setOnClickListener(v -> 
+            Navigation.findNavController(view).navigateUp());
+        
+        // Remove the forgot password navigation for now
+        binding.forgotPasswordLink.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "Feature coming soon", Toast.LENGTH_SHORT).show();
+        });
+
         return view;
     }
 
     private void signIn() {
-        // Use binding to access EditText values
         String email = binding.etEmail.getText().toString().trim();
         String password = binding.etPassword.getText().toString().trim();
 
@@ -73,15 +73,24 @@ public class SignInFragment extends Fragment {
             return;
         }
 
-        // Show loading state (you might want to add a progress bar)
+        // Show loading state
         binding.btnSignIn.setEnabled(false);
 
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(task -> {
                 binding.btnSignIn.setEnabled(true);
                 if (task.isSuccessful()) {
-                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.action_signInFragment_to_homeFragment);
+                    // Add logging to debug navigation
+                    Log.d("SignInFragment", "Sign in successful, attempting navigation");
+                    try {
+                        NavController navController = Navigation.findNavController(requireView());
+                        navController.navigate(R.id.action_signInFragment_to_homeFragment);
+                    } catch (Exception e) {
+                        Log.e("SignInFragment", "Navigation failed", e);
+                        Toast.makeText(requireContext(), 
+                            "Navigation error: " + e.getMessage(), 
+                            Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     String errorMessage = task.getException() != null ? 
                         task.getException().getMessage() : 
