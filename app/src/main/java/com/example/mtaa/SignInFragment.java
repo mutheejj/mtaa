@@ -22,15 +22,25 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-        // Initialize binding
-        binding = FragmentSignInBinding.inflate(inflater, container, false);
+        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+
+        // Initialize views
+        TextView forgotPasswordLink = view.findViewById(R.id.forgot_password_link);
         
+        // Set click listener for forgot password
+        forgotPasswordLink.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_signInFragment_to_resetPasswordFragment);
+        });
+
         mAuth = FirebaseAuth.getInstance();
         
         // Use binding to access views
+        binding = FragmentSignInBinding.inflate(inflater, container, false);
+        
         binding.btnSignIn.setOnClickListener(v -> signIn());
         
-        return binding.getRoot();
+        return view;
     }
 
     private void signIn() {

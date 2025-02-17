@@ -27,8 +27,12 @@
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
+            android:id="@+id/action_signInFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -63,9 +67,9 @@
         android:label="ProfileFragment" />
 
     <fragment
-        android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.mtaa.ForgotPasswordFragment"
-        android:label="ForgotPasswordFragment" />
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.example.mtaa.ResetPasswordFragment"
+        android:label="fragment_reset_password" />
 
     <fragment
         android:id="@+id/createReportFragment"

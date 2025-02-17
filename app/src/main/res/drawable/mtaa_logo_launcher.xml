@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer square frame -->
+    <path
+        android:fillColor="@android:color/black"
+        android:pathData="M24,24 L84,24 L84,84 L24,84 Z M28,28 L80,28 L80,80 L28,80 Z"/>
+    <!-- 'mtaa' text -->
+    <path
+        android:fillColor="@android:color/black"
+        android:pathData="M38,45 L42,45 L42,65 L38,65 Z
+                         M46,38 L50,38 L50,65 L46,65 Z
+                         M54,45 L58,45 L58,65 L54,65 Z
+                         M62,45 L66,45 L66,65 L62,65 Z"/>
+</vector> 
