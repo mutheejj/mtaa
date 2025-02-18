@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Material Design Colors -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     
     <!-- Theme colors -->
     <color name="primary">#2196F3</color>
     <color name="primary_dark">#1976D2</color>
     <color name="secondary">@color/teal_200</color>
     <color name="background">#F5F5F5</color>
-    <color name="error">#FFB00020</color>
+    <color name="error">#F44336</color>
+    <color name="error_light">#FFEBEE</color>
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FFC107</color>
+    <color name="info">#03A9F4</color>
+    <color name="purple">#9C27B0</color>
+    
+    <!-- Text colors -->
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
-    <color name="status_pending">#FFA000</color>  <!-- Amber -->
-    <color name="status_in_progress">#1976D2</color>  <!-- Blue -->
-    <color name="status_resolved">#388E3C</color>  <!-- Green -->
-    <color name="status_rejected">#D32F2F</color>  <!-- Red -->
-    <color name="accent">#FF4081</color>
+    <color name="text_tertiary">#9E9E9E</color>
+    
+    <!-- Status colors -->
+    <color name="status_pending">#FFA000</color>
+    <color name="status_in_progress">#1976D2</color>
+    <color name="status_resolved">#388E3C</color>
+    <color name="status_rejected">#D32F2F</color>
+    
+    <!-- Legacy support -->
+    <color name="colorPrimary">@color/primary</color>
+    <color name="colorPrimaryDark">@color/purple_700</color>
+    <color name="colorAccent">@color/teal_200</color>
+    <color name="colorAccentDark">@color/teal_700</color>
+    <color name="grey">@color/text_secondary</color>
+    <color name="gray">@color/text_secondary</color>
+    <color name="accent">@color/colorAccent</color>
 </resources>

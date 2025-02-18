@@ -14,13 +14,11 @@ public class WelcomeFragment extends Fragment {
                            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
 
-        view.findViewById(R.id.btnSignIn).setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_welcomeFragment_to_signInFragment);
-        });
+        view.findViewById(R.id.btnLogin).setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_welcomeFragment_to_loginFragment));
 
-        view.findViewById(R.id.btnSignUp).setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_welcomeFragment_to_signUpFragment);
-        });
+        view.findViewById(R.id.btnCreateAccount).setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_welcomeFragment_to_createAccountFragment));
 
         return view;
     }

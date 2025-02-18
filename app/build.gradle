@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mtaa"
-        minSdk 26
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -32,6 +32,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
@@ -58,4 +59,18 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Make sure you have these dependencies
+    implementation 'androidx.navigation:navigation-fragment:2.7.7'
+    implementation 'androidx.navigation:navigation-ui:2.7.7'
+    implementation 'com.google.android.material:material:1.11.0'
+
+    // Glide for image loading
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+    
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 } 

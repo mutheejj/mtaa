@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.mtaa.databinding.FragmentSignUpBinding;
 import java.util.HashMap;
 import java.util.Map;
 

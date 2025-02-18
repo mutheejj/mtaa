@@ -3,57 +3,74 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
+    <!-- Header Section with Gradient -->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_gradient">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="@string/app_name"
-            app:logo="@mipmap/ic_launcher"
-            app:titleMarginStart="32dp"/>
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
+            <!-- Profile Section -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/CircleImageView"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/notificationBell"
+                app:layout_constraintStart_toEndOf="@id/profileImage"
+                app:layout_constraintTop_toTopOf="@id/profileImage">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome back,"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/notificationBell"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_notifications"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        app:menu="@menu/bottom_navigation_menu"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_create_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="64dp"
-        android:src="@drawable/ic_add"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/bottom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="64dp"
-        app:cardElevation="8dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,21 +78,273 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Emergency Alert Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recent Reports"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/error_light"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_warning"
+                        app:tint="@color/error" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Emergency? Tap here for immediate assistance"
+                        android:textColor="@color/error"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Quick Actions Grid -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="3">
+
+                <!-- Report Issue Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardReportIssue"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_report_issue"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="Report Issue" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="Submit a new community issue" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- View Map Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewMap"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_map"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="View Map" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="See issues around you" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- My Reports Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMyReports"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_my_reports"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="My Reports" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="Track your submissions" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Trending Issues Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTrending"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            style="@style/HomeCardIconStyle"
+                            android:src="@drawable/ic_trending"
+                            app:tint="@color/warning" />
+
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="Trending" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="Most reported issues" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Government Responses Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardResponses"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            style="@style/HomeCardIconStyle"
+                            android:src="@drawable/ic_government"
+                            app:tint="@color/purple" />
+
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="Responses" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="Official updates" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Settings Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardSettings"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            style="@style/HomeCardIconStyle"
+                            android:src="@drawable/ic_settings"
+                            app:tint="@color/grey" />
+
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="Settings" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="Manage your account" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </GridLayout>
+
+            <!-- Recent Activity Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
+                android:text="Recent Activity"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_reports"
+            <!-- Activity Cards -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your report has been reviewed"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Status updated for: Broken Street Light"
+                        android:textColor="@color/text_secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="2 hours ago"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </androidx.cardview.widget.CardView>
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:text="Report Issue"
+        app:icon="@drawable/ic_add_report"
+        app:backgroundTint="@color/primary" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout> 

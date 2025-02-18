@@ -2,10 +2,18 @@ package com.example.mtaa.models;
 
 import com.google.firebase.firestore.GeoPoint;
 import java.util.Date;
+import com.google.firebase.Timestamp;
 
 public class Report {
     private String id;
     private String userId;
+    private String userName;
+    private String content;
+    private Timestamp timestamp;
+    private int likes;
+    private int comments;
+    private double latitude;
+    private double longitude;
     private String title;
     private String description;
     private String category;
@@ -38,6 +46,27 @@ public class Report {
     
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
+    
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
+    
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
+    
+    public Timestamp getTimestamp() { return timestamp; }
+    public void setTimestamp(Timestamp timestamp) { this.timestamp = timestamp; }
+    
+    public int getLikes() { return likes; }
+    public void setLikes(int likes) { this.likes = likes; }
+    
+    public int getComments() { return comments; }
+    public void setComments(int comments) { this.comments = comments; }
+    
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+    
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double longitude) { this.longitude = longitude; }
     
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

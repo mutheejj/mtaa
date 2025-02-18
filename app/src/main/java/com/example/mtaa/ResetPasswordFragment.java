@@ -6,76 +6,64 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.button.MaterialButton;
-import android.widget.ImageButton;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.example.mtaa.databinding.FragmentResetPasswordBinding;
 
 public class ResetPasswordFragment extends Fragment {
+    private FragmentResetPasswordBinding binding;
     private FirebaseAuth mAuth;
-    private TextInputEditText emailInput;
-    private MaterialButton resetButton;
-    private ImageButton backButton;
-    private ProgressBar progressBar;
+    private EditText emailInput;
+    private Button resetPasswordButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_reset_password, container, false);
-        
-        // Initialize Firebase Auth
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentResetPasswordBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         mAuth = FirebaseAuth.getInstance();
         
-        // Initialize views with correct IDs
-        emailInput = view.findViewById(R.id.etEmail);
-        resetButton = view.findViewById(R.id.btn_reset);
-        backButton = view.findViewById(R.id.btnBack);
-        progressBar = view.findViewById(R.id.progress_bar);
+        // Initialize views with new IDs
+        emailInput = binding.emailEditText;
+        resetPasswordButton = binding.resetPasswordButton;
 
-        // Set click listeners
-        backButton.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigateUp();
-        });
-
-        resetButton.setOnClickListener(v -> {
-            resetPassword();
-        });
-
-        return view;
+        resetPasswordButton.setOnClickListener(v -> resetPassword());
     }
 
     private void resetPassword() {
         String email = emailInput.getText().toString().trim();
 
-        // Validate email
         if (email.isEmpty()) {
             emailInput.setError("Email is required");
+            emailInput.requestFocus();
             return;
         }
 
-        // Show loading state
-        progressBar.setVisibility(View.VISIBLE);
-        resetButton.setEnabled(false);
-
-        // Send reset email
         mAuth.sendPasswordResetEmail(email)
-            .addOnCompleteListener(task -> {
-                // Hide loading state
-                progressBar.setVisibility(View.GONE);
-                resetButton.setEnabled(true);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getActivity(), "Check your email to reset your password", Toast.LENGTH_LONG).show();
+                        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                        navController.navigateUp();
+                    } else {
+                        Toast.makeText(getActivity(), "Failed to send reset email", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
 
-                if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Password reset email sent", Toast.LENGTH_SHORT).show();
-                    
-                    // Navigate back
-                    Navigation.findNavController(getView()).navigateUp();
-                } else {
-                    Toast.makeText(getContext(), "Failed to send reset email", Toast.LENGTH_SHORT).show();
-                }
-            });
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 } 

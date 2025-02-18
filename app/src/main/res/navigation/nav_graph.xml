@@ -8,13 +8,41 @@
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.example.mtaa.WelcomeFragment"
-        android:label="fragment_welcome">
+        android:label="WelcomeFragment">
         <action
-            android:id="@+id/action_welcomeFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_welcomeFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_welcomeFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mtaa.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.mtaa.CreateAccountFragment"
+        android:label="CreateAccountFragment">
+        <action
+            android:id="@+id/action_createAccountFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -26,12 +54,18 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.mtaa.SignUpFragment"
-        android:label="fragment_sign_up">
+        android:label="SignUpFragment">
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -45,6 +79,15 @@
         <action
             android:id="@+id/action_homeFragment_to_createReportFragment"
             app:destination="@id/createReportFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
     </fragment>
 
     <fragment
@@ -55,7 +98,20 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.mtaa.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment">
+        
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+            
+        <action
+            android:id="@+id/action_profileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+            
+        <action
+            android:id="@+id/action_profileFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/resetPasswordFragment"
@@ -67,5 +123,30 @@
         android:name="com.example.mtaa.CreateReportFragment"
         android:label="Create Report"
         tools:layout="@layout/fragment_create_report" />
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.mtaa.EditProfileFragment"
+        android:label="EditProfileFragment" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.mtaa.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.mtaa.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment" />
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.mtaa.MapFragment"
+        android:label="MapFragment" />
+
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.mtaa.NotificationsFragment"
+        android:label="NotificationsFragment" />
 
 </navigation> 

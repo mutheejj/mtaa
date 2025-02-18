@@ -1,103 +1,75 @@
 package com.example.mtaa;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.example.mtaa.databinding.FragmentSignInBinding;
 
 public class SignInFragment extends Fragment {
     private FragmentSignInBinding binding;
-    private FirebaseAuth mAuth;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-        // Initialize view binding
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-
-        // Set click listeners
-        binding.btnSignIn.setOnClickListener(v -> signIn());
-        
-        binding.btnBack.setOnClickListener(v -> 
-            Navigation.findNavController(view).navigateUp());
-        
-        // Remove the forgot password navigation for now
-        binding.forgotPasswordLink.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "Feature coming soon", Toast.LENGTH_SHORT).show();
-        });
-
-        return view;
+        return binding.getRoot();
     }
 
-    private void signIn() {
-        String email = binding.etEmail.getText().toString().trim();
-        String password = binding.etPassword.getText().toString().trim();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        // Validate inputs
+        // Navigate to Sign Up
+        binding.signUpLink.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_signInFragment_to_signUpFragment)
+        );
+
+        // Navigate to Forgot Password
+        binding.forgotPasswordLink.setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
+        );
+
+        // Handle Sign In
+        binding.signInButton.setOnClickListener(v -> {
+            String email = binding.emailInput.getText().toString().trim();
+            String password = binding.passwordInput.getText().toString().trim();
+
+            if (validateInput(email, password)) {
+                signIn(email, password);
+            }
+        });
+    }
+
+    private boolean validateInput(String email, String password) {
+        boolean isValid = true;
+
         if (email.isEmpty()) {
-            binding.etEmail.setError("Email is required");
-            binding.etEmail.requestFocus();
-            return;
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmail.setError("Please enter a valid email");
-            binding.etEmail.requestFocus();
-            return;
+            binding.emailLayout.setError("Email is required");
+            isValid = false;
+        } else {
+            binding.emailLayout.setError(null);
         }
 
         if (password.isEmpty()) {
-            binding.etPassword.setError("Password is required");
-            binding.etPassword.requestFocus();
-            return;
+            binding.passwordLayout.setError("Password is required");
+            isValid = false;
+        } else {
+            binding.passwordLayout.setError(null);
         }
 
-        if (password.length() < 6) {
-            binding.etPassword.setError("Password should be at least 6 characters");
-            binding.etPassword.requestFocus();
-            return;
-        }
+        return isValid;
+    }
 
-        // Show loading state
-        binding.btnSignIn.setEnabled(false);
-
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(task -> {
-                binding.btnSignIn.setEnabled(true);
-                if (task.isSuccessful()) {
-                    // Add logging to debug navigation
-                    Log.d("SignInFragment", "Sign in successful, attempting navigation");
-                    try {
-                        NavController navController = Navigation.findNavController(requireView());
-                        navController.navigate(R.id.action_signInFragment_to_homeFragment);
-                    } catch (Exception e) {
-                        Log.e("SignInFragment", "Navigation failed", e);
-                        Toast.makeText(requireContext(), 
-                            "Navigation error: " + e.getMessage(), 
-                            Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    String errorMessage = task.getException() != null ? 
-                        task.getException().getMessage() : 
-                        "Authentication failed";
-                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show();
-                }
-            });
+    private void signIn(String email, String password) {
+        // Implement your sign-in logic here
+        // For example, using Firebase Authentication
     }
 
     @Override

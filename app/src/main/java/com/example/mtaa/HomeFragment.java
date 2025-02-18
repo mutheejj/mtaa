@@ -30,103 +30,90 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.navigation.Navigation;
 import androidx.core.content.ContextCompat;
+import com.example.mtaa.databinding.FragmentHomeBinding;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import com.example.mtaa.models.Post;
+import com.google.firebase.Timestamp;
+import com.example.mtaa.adapters.PostAdapter;
+import androidx.annotation.Nullable;
 
 public class HomeFragment extends Fragment {
-    private GoogleMap mMap;
-    private FusedLocationProviderClient fusedLocationClient;
-    private FirebaseFirestore db;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private RecyclerView reportsRecyclerView;
-    private EditText searchInput;
-    private List<Report> reports = new ArrayList<>();
-    private BottomNavigationView bottomNavigationView;
+    private FragmentHomeBinding binding;
+    private FirebaseAuth mAuth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
-        // Initialize Firebase
-        db = FirebaseFirestore.getInstance();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         
-        // Initialize location services
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        
+        // Update user name from Firebase Auth
+        updateUserName();
 
-        // Setup bottom navigation
-        bottomNavigationView = view.findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.navigation_home) {
-                return true;
-            } else if (itemId == R.id.navigation_reports) {
-                // Navigate to reports
-                return true;
-            } else if (itemId == R.id.navigation_profile) {
-                // Navigate to profile
-                return true;
+        // Set click listeners for cards
+        binding.cardReportIssue.setOnClickListener(v -> {
+            // Navigation will be implemented later
+        });
+
+        binding.cardViewMap.setOnClickListener(v -> {
+            // Navigation will be implemented later
+        });
+
+        binding.cardMyReports.setOnClickListener(v -> {
+            // Navigation will be implemented later
+        });
+
+        binding.cardTrending.setOnClickListener(v -> {
+            // Navigation will be implemented later
+        });
+
+        binding.cardResponses.setOnClickListener(v -> {
+            // Navigation will be implemented later
+        });
+
+        binding.cardSettings.setOnClickListener(v -> {
+            // Navigation will be implemented later
+        });
+
+        binding.fabReport.setOnClickListener(v -> {
+            // Quick report action will be implemented later
+        });
+
+        binding.notificationBell.setOnClickListener(v -> {
+            // Notification handling will be implemented later
+        });
+    }
+
+    private void updateUserName() {
+        if (mAuth.getCurrentUser() != null) {
+            String displayName = mAuth.getCurrentUser().getDisplayName();
+            if (displayName != null && !displayName.isEmpty()) {
+                binding.userName.setText(displayName);
+            } else {
+                // Fallback to email if name is not set
+                String email = mAuth.getCurrentUser().getEmail();
+                if (email != null) {
+                    // Remove everything after @ in email
+                    String username = email.split("@")[0];
+                    // Capitalize first letter
+                    username = username.substring(0, 1).toUpperCase() + username.substring(1);
+                    binding.userName.setText(username);
+                }
             }
-            return false;
-        });
-
-        // Setup map
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(googleMap -> {
-                mMap = googleMap;
-                // Enable my location if permission is granted
-                enableMyLocation();
-            });
         }
-
-        // Setup FAB
-        FloatingActionButton fab = view.findViewById(R.id.fab_create_report);
-        fab.setOnClickListener(v -> {
-            // Navigate to create report
-            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_createReportFragment);
-        });
-
-        return view;
-    }
-
-    private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-        }
-    }
-
-    private void loadReports() {
-        db.collection("reports")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    mMap.clear();
-                    for (DocumentSnapshot document : queryDocumentSnapshots) {
-                        Report report = document.toObject(Report.class);
-                        if (report != null && report.getLocation() != null) {
-                            LatLng position = new LatLng(report.getLocation().getLatitude(),
-                                                       report.getLocation().getLongitude());
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(position)
-                                    .title(report.getTitle())
-                                    .snippet(report.getDescription()));
-                        }
-                    }
-                })
-                .addOnFailureListener(e -> 
-                    Toast.makeText(getContext(), "Error loading reports: " + e.getMessage(),
-                            Toast.LENGTH_SHORT).show());
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                         @NonNull int[] grantResults) {
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                enableMyLocation();
-            } else {
-                Toast.makeText(getContext(), "Location permission is required",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 } 
