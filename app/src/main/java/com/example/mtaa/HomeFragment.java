@@ -36,10 +36,12 @@ import com.example.mtaa.models.Post;
 import com.google.firebase.Timestamp;
 import com.example.mtaa.adapters.PostAdapter;
 import androidx.annotation.Nullable;
+import com.bumptech.glide.Glide;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,63 +54,100 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        // Initialize Firebase Auth
+        // Initialize Firebase instances
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         
-        // Update user name from Firebase Auth
-        updateUserName();
+        // Update user information
+        updateUserInfo();
 
         // Set click listeners for cards
-        binding.cardReportIssue.setOnClickListener(v -> {
-            // Navigation will be implemented later
-        });
+        binding.cardReportIssue.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_createReportFragment)
+        );
 
-        binding.cardViewMap.setOnClickListener(v -> {
-            // Navigation will be implemented later
-        });
+        binding.cardViewMap.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_mapFragment)
+        );
 
         binding.cardMyReports.setOnClickListener(v -> {
-            // Navigation will be implemented later
+            // Navigate to filtered reports showing only user's reports
+            Bundle args = new Bundle();
+            args.putBoolean("showUserReportsOnly", true);
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_reportsFragment, args);
         });
 
         binding.cardTrending.setOnClickListener(v -> {
-            // Navigation will be implemented later
+            // Navigate to reports sorted by popularity/urgency
+            Bundle args = new Bundle();
+            args.putString("sortBy", "trending");
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_reportsFragment, args);
         });
 
-        binding.cardResponses.setOnClickListener(v -> {
-            // Navigation will be implemented later
-        });
+        binding.cardResponses.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_responsesFragment)
+        );
 
-        binding.cardSettings.setOnClickListener(v -> {
-            // Navigation will be implemented later
-        });
+        binding.cardSettings.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_profileFragment)
+        );
 
-        binding.fabReport.setOnClickListener(v -> {
-            // Quick report action will be implemented later
-        });
+        binding.fabReport.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_createReportFragment)
+        );
 
-        binding.notificationBell.setOnClickListener(v -> {
-            // Notification handling will be implemented later
+        binding.notificationBell.setOnClickListener(v -> 
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_notificationsFragment)
+        );
+
+        // Set up emergency alert card
+        binding.emergencyCard.setOnClickListener(v -> {
+            // Launch emergency contact dialog or screen
+            showEmergencyDialog();
         });
     }
 
-    private void updateUserName() {
+    private void updateUserInfo() {
         if (mAuth.getCurrentUser() != null) {
-            String displayName = mAuth.getCurrentUser().getDisplayName();
-            if (displayName != null && !displayName.isEmpty()) {
-                binding.userName.setText(displayName);
-            } else {
-                // Fallback to email if name is not set
-                String email = mAuth.getCurrentUser().getEmail();
-                if (email != null) {
-                    // Remove everything after @ in email
-                    String username = email.split("@")[0];
-                    // Capitalize first letter
-                    username = username.substring(0, 1).toUpperCase() + username.substring(1);
-                    binding.userName.setText(username);
-                }
-            }
+            String uid = mAuth.getCurrentUser().getUid();
+            db.collection("users").document(uid).get()
+                .addOnSuccessListener(document -> {
+                    if (document.exists()) {
+                        String name = document.getString("name");
+                        String profileImageUrl = document.getString("profileImage");
+                        
+                        // Update user name
+                        binding.userName.setText(name);
+                        
+                        // Load profile image
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                            Glide.with(this)
+                                .load(profileImageUrl)
+                                .placeholder(R.drawable.default_avatar)
+                                .error(R.drawable.default_avatar)
+                                .into(binding.profileImage);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> 
+                    Toast.makeText(getContext(), "Error loading user data: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show()
+                );
         }
+    }
+
+    private void showEmergencyDialog() {
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Emergency Contact")
+            .setMessage("Do you want to contact emergency services?")
+            .setPositiveButton("Call Emergency", (dialog, which) -> {
+                // Implement emergency call functionality
+                Toast.makeText(getContext(), "Connecting to emergency services...",
+                    Toast.LENGTH_LONG).show();
+            })
+            .setNegativeButton("Cancel", null)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
     }
 
     @Override
@@ -116,4 +155,4 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-} 
+}

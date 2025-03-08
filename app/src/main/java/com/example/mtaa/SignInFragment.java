@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,14 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.mtaa.databinding.FragmentSignInBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInFragment extends Fragment {
     private FragmentSignInBinding binding;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
+        mAuth = FirebaseAuth.getInstance();
         return binding.getRoot();
     }
 
@@ -49,9 +53,13 @@ public class SignInFragment extends Fragment {
 
     private boolean validateInput(String email, String password) {
         boolean isValid = true;
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if (email.isEmpty()) {
             binding.emailLayout.setError("Email is required");
+            isValid = false;
+        } else if (!email.matches(emailPattern)) {
+            binding.emailLayout.setError("Please enter a valid email address");
             isValid = false;
         } else {
             binding.emailLayout.setError(null);
@@ -59,6 +67,9 @@ public class SignInFragment extends Fragment {
 
         if (password.isEmpty()) {
             binding.passwordLayout.setError("Password is required");
+            isValid = false;
+        } else if (password.length() < 6) {
+            binding.passwordLayout.setError("Password must be at least 6 characters");
             isValid = false;
         } else {
             binding.passwordLayout.setError(null);
@@ -68,8 +79,22 @@ public class SignInFragment extends Fragment {
     }
 
     private void signIn(String email, String password) {
-        // Implement your sign-in logic here
-        // For example, using Firebase Authentication
+        if (!validateInput(email, password)) {
+            return;
+        }
+        
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Navigate to Home screen
+                    Navigation.findNavController(getView())
+                        .navigate(R.id.action_signInFragment_to_homeFragment);
+                } else {
+                    // Show error message
+                    Toast.makeText(getContext(), "Authentication failed: " + 
+                        task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 
     @Override
@@ -77,4 +102,4 @@ public class SignInFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-} 
+}

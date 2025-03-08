@@ -88,6 +88,12 @@
         <action
             android:id="@+id/action_homeFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_responsesFragment"
+            app:destination="@id/responsesFragment" />
     </fragment>
 
     <fragment
@@ -99,7 +105,10 @@
         android:id="@+id/profileFragment"
         android:name="com.example.mtaa.ProfileFragment"
         android:label="ProfileFragment">
-        
+        <fragment
+            android:id="@+id/responsesFragment"
+            android:name="com.example.mtaa.ResponsesFragment"
+            android:label="ResponsesFragment" />
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -149,4 +158,4 @@
         android:name="com.example.mtaa.NotificationsFragment"
         android:label="NotificationsFragment" />
 
-</navigation> 
+</navigation>
