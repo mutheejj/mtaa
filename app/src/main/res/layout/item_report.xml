@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/status_background"
+                android:background="@drawable/default_profile"
                 android:padding="4dp"
                 android:textColor="@android:color/white"/>
 

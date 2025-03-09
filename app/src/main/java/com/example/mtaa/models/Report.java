@@ -1,10 +1,12 @@
 package com.example.mtaa.models;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.maps.android.clustering.ClusterItem;
 import java.util.Date;
 import com.google.firebase.Timestamp;
 
-public class Report {
+public class Report implements ClusterItem {
     private String id;
     private String userId;
     private String userName;
@@ -28,6 +30,19 @@ public class Report {
     }
 
     public Report(String userId, String title, String description, String category,
+                 GeoPoint location, String imageUrl, Timestamp timestamp) {
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.location = location;
+        this.imageUrl = imageUrl;
+        this.timestamp = timestamp;
+        this.upvotes = 0;
+        this.status = "pending";
+        this.createdAt = new Date();
+    }
+    public Report(String userId, String title, String description, String category,
                  GeoPoint location, String imageUrl) {
         this.userId = userId;
         this.title = title;
@@ -39,7 +54,6 @@ public class Report {
         this.status = "pending";
         this.createdAt = new Date();
     }
-
     // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -80,6 +94,10 @@ public class Report {
     public GeoPoint getLocation() { return location; }
     public void setLocation(GeoPoint location) { this.location = location; }
     
+    public void setPosition(LatLng position) {
+        this.location = new GeoPoint(position.latitude, position.longitude);
+    }
+    
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     
@@ -91,4 +109,19 @@ public class Report {
     
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
-} 
+
+    @Override
+    public LatLng getPosition() {
+        return location != null ? new LatLng(location.getLatitude(), location.getLongitude()) : null;
+    }
+
+    @Override
+    public String getSnippet() {
+        return category;
+    }
+
+    @Override
+    public Float getZIndex() {
+        return 1.0f;
+    }
+}

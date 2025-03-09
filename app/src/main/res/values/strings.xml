@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mtaa Alert</string>
+    <string name="app_name">Mtaa</string>
     <string name="welcome_message">Welcome to Mtaa Alert</string>
     <string name="welcome_subtitle">Empowering communities for better infrastructure</string>
     <string name="sign_in">Sign In</string>
@@ -33,4 +33,5 @@
     <string name="cancel">Cancel</string>
     <string name="logout_confirmation_title">Logout Confirmation</string>
     <string name="logout_confirmation_message">Are you sure you want to logout?</string>
+    <string name="map_view">Map View</string>
 </resources>

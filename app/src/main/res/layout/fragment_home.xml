@@ -40,6 +40,7 @@
                 app:layout_constraintTop_toTopOf="@id/profileImage">
 
                 <TextView
+                    android:id="@+id/greetingText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Welcome back,"
@@ -53,6 +54,14 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/userEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:alpha="0.8" />
             </LinearLayout>
 
             <ImageButton
@@ -107,9 +116,8 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/ic_warning"
-                        android:scaleType="fitXY"
-                        app:tint="@color/error" />
+                        android:src="@drawable/emergency"
+                        android:scaleType="fitXY" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -171,10 +179,9 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_report_issue"
+                            android:src="@drawable/report"
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true" />
-                            android:scaleType="centerCrop" />
                         <TextView
                             style="@style/HomeCardTitleStyle"
                             android:text="Report Issue" />
@@ -202,10 +209,9 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_map"
+                            android:src="@drawable/map"
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true" />
-                            android:scaleType="centerCrop" />
                         <TextView
                             style="@style/HomeCardTitleStyle"
                             android:text="View Map" />
@@ -232,10 +238,9 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_marginBottom="8dp"
-                            android:src="@drawable/ic_my_reports"
-                            android:scaleType="fitCenter"
+                            android:src="@drawable/view"
+                            android:scaleType="center"
                             android:adjustViewBounds="true" />
-                            android:scaleType="centerCrop" />
                         <TextView
                             style="@style/HomeCardTitleStyle"
                             android:text="My Reports" />
@@ -260,10 +265,9 @@
 
                         <ImageView
                             style="@style/HomeCardIconStyle"
-                            android:src="@drawable/ic_trending"
-                            android:scaleType="fitCenter"
-                            android:adjustViewBounds="true"
-                            app:tint="@color/warning" />
+                            android:src="@drawable/trending"
+                            android:scaleType="fitXY"
+                            android:adjustViewBounds="true" />
                         <TextView
                             style="@style/HomeCardTitleStyle"
                             android:text="Trending" />
@@ -288,10 +292,9 @@
 
                         <ImageView
                             style="@style/HomeCardIconStyle"
-                            android:src="@drawable/ic_government"
+                            android:src="@drawable/goverment"
                             android:scaleType="fitCenter"
-                            android:adjustViewBounds="true"
-                            app:tint="@color/purple" />
+                            android:adjustViewBounds="true" />
                         <TextView
                             style="@style/HomeCardTitleStyle"
                             android:text="Responses" />
@@ -316,10 +319,9 @@
 
                         <ImageView
                             style="@style/HomeCardIconStyle"
-                            android:src="@drawable/ic_settings"
+                            android:src="@drawable/settings"
                             android:scaleType="fitCenter"
-                            android:adjustViewBounds="true"
-                            app:tint="@color/grey" />
+                            android:adjustViewBounds="true" />
                         <TextView
                             style="@style/HomeCardTitleStyle"
                             android:text="Settings" />
@@ -331,60 +333,157 @@
                 </com.google.android.material.card.MaterialCardView>
             </GridLayout>
 
-            <!-- Recent Activity Section with Shimmer Effect -->
+            <!-- Achievements Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Achievements"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/achievementsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <!-- User Stats Section -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp"
-                android:text="Recent Activity"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
-            <!-- Activity Cards with Shimmer -->
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.card.MaterialCardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Impact"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <!-- Reports Stats -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Your report has been reviewed"
-                            android:textColor="@color/text_primary"
-                            android:textStyle="bold" />
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/reportsCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Reports" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <!-- Resolved Issues Stats -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Status updated for: Broken Street Light"
-                            android:textColor="@color/text_secondary" />
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/resolvedCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/success" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Resolved" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <!-- Community Impact Stats -->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="2 hours ago"
-                            android:textColor="@color/text_tertiary"
-                            android:textSize="12sp" />
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/impactScore"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/accent" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Impact Score" />
+                        </LinearLayout>
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Recent Activity Feed -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recent Activity"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recentActivityRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
