@@ -34,4 +34,18 @@
     <string name="logout_confirmation_title">Logout Confirmation</string>
     <string name="logout_confirmation_message">Are you sure you want to logout?</string>
     <string name="map_view">Map View</string>
+    <string name="map_legend">Map Legend</string>
+    <string name="hazard_marker">Hazard Marker</string>
+    <string name="hazard">Hazard</string>
+    <string name="incident_marker">Incident Marker</string>
+    <string name="incident">Incident</string>
+    <string name="maintenance_marker">Maintenance Marker</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="cluster_colors">Cluster Colors</string>
+    <string name="less_than_10">Less than 10 reports</string>
+    <string name="less_than_50">Less than 50 reports</string>
+    <string name="less_than_100">Less than 100 reports</string>
+    <string name="more_than_100">More than 100 reports</string>
+    <string name="category_icon">Category Icon</string>
+    <string name="view_details">View Details</string>
 </resources>

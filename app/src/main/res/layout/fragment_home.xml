@@ -495,7 +495,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:text="Report Issue"
-        app:icon="@drawable/ic_add_report"
-        app:backgroundTint="@color/primary" />
+        app:icon="@drawable/report" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

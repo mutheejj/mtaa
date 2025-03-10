@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep Google Maps classes
+-keep class com.google.android.gms.maps.** { *; }
+-keep class com.google.android.gms.maps.model.** { *; }
+-keepclassmembers class com.google.android.gms.maps.model.LatLng {
+    public <init>(double, double);
+    public double latitude;
+    public double longitude;
+}

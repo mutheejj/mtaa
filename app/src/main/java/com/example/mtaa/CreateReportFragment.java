@@ -1,10 +1,13 @@
 package com.example.mtaa;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.UriPermission;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +41,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 public class CreateReportFragment extends Fragment implements OnMapReadyCallback {
@@ -100,8 +106,21 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
             new ActivityResultContracts.GetContent(),
             uri -> {
                 if (uri != null) {
-                    selectedImageUri = uri;
-                    binding.imagePreview.setImageURI(uri);
+                    try {
+                        ContentResolver contentResolver = requireContext().getContentResolver();
+                        
+                        // Take persistent permission
+                        final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                            
+                        contentResolver.takePersistableUriPermission(uri, takeFlags);
+                        selectedImageUri = uri;
+                        binding.imagePreview.setImageURI(uri);
+                        binding.imagePreview.setVisibility(View.VISIBLE);
+                    } catch (SecurityException e) {
+                        String errorMessage = "Failed to access the image. Please try selecting a different image or check app permissions.";
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
                 }
             });
     }
@@ -159,7 +178,9 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
                     if (location != null) {
                         LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                         updateMapLocation(currentLocation);
-                        Toast.makeText(requireContext(), "Location detected!", Toast.LENGTH_SHORT).show();
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Location detected!", Toast.LENGTH_SHORT).show();
+                        }
                         fusedLocationClient.removeLocationUpdates(this);
                     }
                 }
@@ -234,20 +255,46 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
 
     private void uploadImageAndCreateReport(String title, String description, String category) {
         if (selectedImageUri != null) {
-            String imageFileName = "reports/" + UUID.randomUUID().toString();
-            StorageReference imageRef = storageRef.child(imageFileName);
-
-            imageRef.putFile(selectedImageUri)
-                .addOnSuccessListener(taskSnapshot -> 
-                    imageRef.getDownloadUrl().addOnSuccessListener(downloadUrl ->
-                        createReport(title, description, category, downloadUrl.toString())
-                    )
-                )
-                .addOnFailureListener(e -> {
+            try {
+                // Validate image file existence and accessibility
+                InputStream inputStream = getContext().getContentResolver().openInputStream(selectedImageUri);
+                if (inputStream == null) {
+                    Toast.makeText(getContext(), "Error: Cannot access the selected image", Toast.LENGTH_LONG).show();
                     binding.submitButton.setEnabled(true);
-                    Toast.makeText(getContext(), "Failed to upload image: " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-                });
+                    return;
+                }
+                inputStream.close();
+                
+                String imageFileName = "reports/" + UUID.randomUUID().toString() + ".jpg";
+                StorageReference imageRef = storageRef.child(imageFileName);
+
+                imageRef.putFile(selectedImageUri)
+                    .addOnProgressListener(snapshot -> {
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        binding.submitButton.setText("Uploading: " + (int)progress + "%");
+                    })
+                    .addOnSuccessListener(taskSnapshot -> {
+                        binding.submitButton.setText("Submit Report");
+                        Toast.makeText(getContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        imageRef.getDownloadUrl().addOnSuccessListener(downloadUrl ->
+                                createReport(title, description, category, downloadUrl.toString())
+                        ).addOnFailureListener(e -> {
+                            binding.submitButton.setEnabled(true);
+                            Toast.makeText(getContext(), "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        binding.submitButton.setText("Retry Upload");
+                        binding.submitButton.setEnabled(true);
+                        Toast.makeText(getContext(), "Upload failed: " + e.getMessage() + "\nTap Submit to retry", Toast.LENGTH_LONG).show();
+                    });
+            } catch (IOException e) {
+                binding.submitButton.setEnabled(true);
+                Toast.makeText(getContext(), "Error accessing image file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                binding.submitButton.setEnabled(true);
+                Toast.makeText(getContext(), "Error accessing image file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         } else {
             createReport(title, description, category, null);
         }
@@ -281,11 +328,5 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
                 Toast.makeText(getContext(), "Failed to submit report: " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
             });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }
