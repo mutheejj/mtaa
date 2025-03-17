@@ -81,20 +81,25 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void loadUserProfile() {
+        if (binding == null) return;
+        
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
             
             db.collection("users").document(uid).get()
                 .addOnSuccessListener(document -> {
+                    if (binding == null) return;
                     if (document.exists()) {
                         String name = document.getString("name");
                         String profileImageUrl = document.getString("profileImage");
                         
-                        binding.etDisplayName.setText(name);
+                        if (name != null) {
+                            binding.etDisplayName.setText(name);
+                        }
                         
-                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-                            Glide.with(this)
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty() && isAdded()) {
+                            Glide.with(requireContext())
                                 .load(profileImageUrl)
                                 .placeholder(R.drawable.default_profile)
                                 .error(R.drawable.default_profile)

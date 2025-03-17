@@ -4,7 +4,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.maps.android.clustering.ClusterItem;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.PropertyName;
 
 public class Report implements ClusterItem {
     private String id;
@@ -13,7 +16,7 @@ public class Report implements ClusterItem {
     private String content;
     private Timestamp timestamp;
     private int likes;
-    private int comments;
+    private List<String> comments = new ArrayList<>();
     private double latitude;
     private double longitude;
     private String title;
@@ -28,9 +31,13 @@ public class Report implements ClusterItem {
     public Report() {
         // Required empty constructor for Firestore
         this.upvotes = 0;
-        this.comments = 0;
+        this.comments = new ArrayList<>();
+        this.likes = 0;
         this.status = "pending";
         this.createdAt = new Date();
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+        this.timestamp = new Timestamp(new Date());
     }
 
     public Report(String userId, String title, String description, String category,
@@ -77,8 +84,19 @@ public class Report implements ClusterItem {
     public int getLikes() { return likes; }
     public void setLikes(int likes) { this.likes = likes; }
     
-    public int getComments() { return comments; }
-    public void setComments(int comments) { this.comments = comments; }
+    public List<String> getComments() { return comments; }
+    public void setComments(List<String> comments) { this.comments = comments; }
+    
+    @com.google.firebase.firestore.PropertyName("comments")
+    public void setCommentsFromFirestore(Object commentsObj) {
+        if (commentsObj instanceof List) {
+            this.comments = (List<String>) commentsObj;
+        } else if (commentsObj instanceof Integer) {
+            this.comments = new ArrayList<>();
+        } else {
+            this.comments = new ArrayList<>();
+        }
+    }
     
     public double getLatitude() { return latitude; }
     public void setLatitude(double latitude) { this.latitude = latitude; }

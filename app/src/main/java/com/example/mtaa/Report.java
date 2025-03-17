@@ -20,27 +20,10 @@ public class Report implements ClusterItem {
     private List<String> comments = new ArrayList<>();
     private int upvotes = 0;
 
-    @com.google.firebase.firestore.Exclude
-    private Long commentsCount; // Temporary field to handle legacy data
-
-    public void setCommentsCount(Long count) {
-        this.commentsCount = count;
-        if (this.comments == null) {
-            this.comments = new ArrayList<>();
-        }
-        // Convert legacy Long comments count to empty comment list
-        if (count != null && (this.comments == null || this.comments.isEmpty())) {
-            this.comments = new ArrayList<>();
-        }
-    }
-
     @com.google.firebase.firestore.PropertyName("comments")
     public void setCommentsFromFirestore(Object commentsObj) {
         if (commentsObj instanceof List) {
             this.comments = (List<String>) commentsObj;
-        } else if (commentsObj instanceof Long) {
-            this.commentsCount = (Long) commentsObj;
-            this.comments = new ArrayList<>();
         } else {
             this.comments = new ArrayList<>();
         }

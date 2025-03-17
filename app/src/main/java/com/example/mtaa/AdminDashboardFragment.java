@@ -32,6 +32,8 @@ public class AdminDashboardFragment extends Fragment {
     private TextView resolvedReportsCount;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerLayout;
+    private ReportAdapter reportAdapter;
+    private boolean isDataLoading = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -97,10 +99,12 @@ public class AdminDashboardFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
+        if (getContext() == null || reportsRecyclerView == null) return;
+        
         reportsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         reportList = new ArrayList<>();
-        ReportAdapter adapter = new ReportAdapter(reportList);
-        reportsRecyclerView.setAdapter(adapter);
+        reportAdapter = new ReportAdapter(reportList);
+        reportsRecyclerView.setAdapter(reportAdapter);
     }
 
     private void setupQuickActionCards(View view) {
@@ -125,8 +129,10 @@ public class AdminDashboardFragment extends Fragment {
     }
 
     private void loadDashboardData() {
-        if (!isAdded() || getContext() == null) return;
+        if (!isAdded() || getContext() == null || isDataLoading) return;
         if (!checkGooglePlayServices()) return;
+        
+        isDataLoading = true;
 
         shimmerLayout.setVisibility(View.VISIBLE);
         shimmerLayout.startShimmer();
@@ -190,13 +196,20 @@ public class AdminDashboardFragment extends Fragment {
                     }
 
                     reportsRecyclerView.setVisibility(View.VISIBLE);
-                    reportsRecyclerView.getAdapter().notifyDataSetChanged();
+                    if (reportAdapter != null) {
+                        reportAdapter.notifyDataSetChanged();
+                    }
+                    isDataLoading = false;
                 });
     }
 
     private void showError(String message) {
-        if (getContext() != null) {
+        if (getContext() != null && isAdded()) {
             Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+        isDataLoading = false;
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
         shimmerLayout.stopShimmer();
         shimmerLayout.setVisibility(View.GONE);

@@ -41,6 +41,8 @@ public class ChangePasswordFragment extends Fragment {
     }
 
     private void changePassword() {
+        if (binding == null || !isAdded()) return;
+
         String currentPassword = binding.currentPassword.getText().toString().trim();
         String newPassword = binding.newPassword.getText().toString().trim();
         String confirmNewPassword = binding.confirmNewPassword.getText().toString().trim();
