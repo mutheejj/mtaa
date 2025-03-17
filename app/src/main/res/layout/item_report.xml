@@ -42,6 +42,21 @@
                 android:textColor="@color/text_secondary"/>
 
             <TextView
+                android:id="@+id/report_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"/>
+
+            <TextView
+                android:id="@+id/report_timestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"/>
+
+            <TextView
                 android:id="@+id/report_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,4 +84,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView> 
+</androidx.cardview.widget.CardView>

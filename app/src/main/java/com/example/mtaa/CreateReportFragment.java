@@ -39,26 +39,43 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.File;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class CreateReportFragment extends Fragment implements OnMapReadyCallback {
     private FragmentCreateReportBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
     private FusedLocationProviderClient fusedLocationClient;
+    private GoogleSignInClient googleSignInClient;
+    private Drive driveService;
+    private static final int RC_SIGN_IN = 9001;
+    private final Executor executor = Executors.newSingleThreadExecutor();
     private GoogleMap mMap;
     private Uri selectedImageUri;
     private LatLng selectedLocation;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     private ActivityResultLauncher<String> imagePickerLauncher;
+    private ActivityResultLauncher<String> cameraPermissionLauncher;
+    private ActivityResultLauncher<Uri> takePictureLauncher;
+    private Uri photoUri;
 
     private final String[] categories = new String[]{
         "Road Damage", "Street Light", "Garbage", "Graffiti",
@@ -70,17 +87,30 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
                            Bundle savedInstanceState) {
         binding = FragmentCreateReportBinding.inflate(inflater, container, false);
         
-        // Initialize Firebase
+        // Initialize Firebase and Location Services
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        
-        // Initialize location services
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        
+        // Initialize Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
+            .build();
+        
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+        
+        // Check for existing Google Sign In account
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireContext());
+        if (account != null && account.getGrantedScopes().contains(new Scope(DriveScopes.DRIVE_FILE))) {
+            setupDriveService(account);
+        } else {
+            startActivityForResult(googleSignInClient.getSignInIntent(), RC_SIGN_IN);
+        }
         
         setupPermissionLaunchers();
         setupImagePicker();
+        setupCameraCapture();
         setupMapFragment();
         setupCategoryDropdown();
         setupClickListeners();
@@ -89,6 +119,17 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
     }
 
     private void setupPermissionLaunchers() {
+        cameraPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            isGranted -> {
+                if (isGranted) {
+                    launchCamera();
+                } else {
+                    Toast.makeText(getContext(), "Camera permission is required to take pictures",
+                        Toast.LENGTH_LONG).show();
+                }
+            });
+
         requestPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             isGranted -> {
@@ -101,6 +142,45 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
             });
     }
 
+    private void setupCameraCapture() {
+        takePictureLauncher = registerForActivityResult(
+            new ActivityResultContracts.TakePicture(),
+            success -> {
+                if (success && photoUri != null) {
+                    selectedImageUri = photoUri;
+                    binding.imagePreview.setImageURI(photoUri);
+                    binding.imagePreview.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getContext(), "Failed to capture image", Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
+
+    private void checkCameraPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(),
+            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            launchCamera();
+        } else {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA);
+        }
+    }
+
+    private void launchCamera() {
+        try {
+            String fileName = "photo_" + UUID.randomUUID().toString() + ".jpg";
+            java.io.File photoFile = new java.io.File(requireContext().getCacheDir(), fileName);
+            photoUri = androidx.core.content.FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.mtaa.fileprovider",
+                photoFile
+            );
+            takePictureLauncher.launch(photoUri);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Error setting up camera: " + e.getMessage(),
+                Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void setupImagePicker() {
         imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
@@ -108,16 +188,32 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
                 if (uri != null) {
                     try {
                         ContentResolver contentResolver = requireContext().getContentResolver();
+                        InputStream inputStream = contentResolver.openInputStream(uri);
+                        if (inputStream == null) {
+                            Toast.makeText(getContext(), "Error: Cannot access the selected image", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        // Create a temporary file in the app's cache directory
+                        java.io.File cacheDir = requireContext().getCacheDir();
+                        java.io.File tempFile = new java.io.File(cacheDir, "temp_image_" + UUID.randomUUID().toString() + ".jpg");
                         
-                        // Take persistent permission
-                        final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                            
-                        contentResolver.takePersistableUriPermission(uri, takeFlags);
-                        selectedImageUri = uri;
-                        binding.imagePreview.setImageURI(uri);
+                        // Copy the input stream to the temporary file
+                        java.io.FileOutputStream outputStream = new java.io.FileOutputStream(tempFile);
+                        byte[] buffer = new byte[4096];
+                        int bytesRead;
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                        outputStream.close();
+                        inputStream.close();
+
+                        // Update the selectedImageUri to point to the temporary file
+                        selectedImageUri = Uri.fromFile(tempFile);
+                        binding.imagePreview.setImageURI(selectedImageUri);
                         binding.imagePreview.setVisibility(View.VISIBLE);
-                    } catch (SecurityException e) {
-                        String errorMessage = "Failed to access the image. Please try selecting a different image or check app permissions.";
+                    } catch (IOException | SecurityException e) {
+                        String errorMessage = "Failed to process the selected image: " + e.getMessage();
                         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
@@ -150,6 +246,8 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
 
         binding.addImageButton.setOnClickListener(v -> 
             imagePickerLauncher.launch("image/*"));
+
+        binding.takePictureButton.setOnClickListener(v -> checkCameraPermission());
 
         binding.submitButton.setOnClickListener(v -> validateAndSubmitReport());
     }
@@ -253,41 +351,81 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
         uploadImageAndCreateReport(title, description, category);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignIn.getSignedInAccountFromIntent(data)
+                .addOnSuccessListener(account -> setupDriveService(account))
+                .addOnFailureListener(e -> {
+                    binding.submitButton.setEnabled(true);
+                    Toast.makeText(getContext(), "Google Sign In failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+        }
+    }
+
+    private void setupDriveService(GoogleSignInAccount account) {
+        executor.execute(() -> {
+            GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
+                requireContext(),
+                Collections.singleton(DriveScopes.DRIVE_FILE)
+            );
+            credential.setSelectedAccount(account.getAccount());
+
+            driveService = new Drive.Builder(
+                AndroidHttp.newCompatibleTransport(),
+                new GsonFactory(),
+                credential)
+                .setApplicationName("MTAA App")
+                .build();
+        });
+    }
+
     private void uploadImageAndCreateReport(String title, String description, String category) {
         if (selectedImageUri != null) {
             try {
-                // Validate image file existence and accessibility
-                InputStream inputStream = getContext().getContentResolver().openInputStream(selectedImageUri);
+                ContentResolver contentResolver = requireContext().getContentResolver();
+                InputStream inputStream = contentResolver.openInputStream(selectedImageUri);
                 if (inputStream == null) {
                     Toast.makeText(getContext(), "Error: Cannot access the selected image", Toast.LENGTH_LONG).show();
                     binding.submitButton.setEnabled(true);
                     return;
                 }
-                inputStream.close();
-                
-                String imageFileName = "reports/" + UUID.randomUUID().toString() + ".jpg";
-                StorageReference imageRef = storageRef.child(imageFileName);
 
-                imageRef.putFile(selectedImageUri)
-                    .addOnProgressListener(snapshot -> {
-                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                        binding.submitButton.setText("Uploading: " + (int)progress + "%");
-                    })
-                    .addOnSuccessListener(taskSnapshot -> {
-                        binding.submitButton.setText("Submit Report");
-                        Toast.makeText(getContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                        imageRef.getDownloadUrl().addOnSuccessListener(downloadUrl ->
-                                createReport(title, description, category, downloadUrl.toString())
-                        ).addOnFailureListener(e -> {
-                            binding.submitButton.setEnabled(true);
-                            Toast.makeText(getContext(), "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                executor.execute(() -> {
+                    try {
+                        // Create file metadata
+                        File fileMetadata = new File();
+                        fileMetadata.setName(UUID.randomUUID().toString() + ".jpg");
+                        fileMetadata.setMimeType("image/jpeg");
+
+                        // Upload file to Drive
+                        File uploadedFile = driveService.files().create(fileMetadata, 
+                            new com.google.api.client.http.InputStreamContent("image/jpeg", inputStream))
+                            .setFields("id, webViewLink")
+                            .execute();
+
+                        // Get the shareable link
+                        String imageUrl = uploadedFile.getWebViewLink();
+                        
+                        requireActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                            createReport(title, description, category, imageUrl);
                         });
-                    })
-                    .addOnFailureListener(e -> {
-                        binding.submitButton.setText("Retry Upload");
-                        binding.submitButton.setEnabled(true);
-                        Toast.makeText(getContext(), "Upload failed: " + e.getMessage() + "\nTap Submit to retry", Toast.LENGTH_LONG).show();
-                    });
+                    } catch (IOException e) {
+                        requireActivity().runOnUiThread(() -> {
+                            binding.submitButton.setEnabled(true);
+                            Toast.makeText(getContext(), "Failed to upload image: " + e.getMessage(), 
+                                Toast.LENGTH_LONG).show();
+                        });
+                    } finally {
+                        try {
+                            inputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             } catch (IOException e) {
                 binding.submitButton.setEnabled(true);
                 Toast.makeText(getContext(), "Error accessing image file: " + e.getMessage(), Toast.LENGTH_LONG).show();

@@ -33,6 +33,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
+        android:name=".MtaaApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -42,6 +43,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mtaa"
         tools:targetApi="31">
+        
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.mtaa.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         
         <activity
             android:name=".MainActivity"
