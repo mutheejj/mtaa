@@ -2,6 +2,8 @@ package com.example.mtaa;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Report implements ClusterItem {
     private String id;
@@ -14,6 +16,35 @@ public class Report implements ClusterItem {
     private transient LatLng position; // transient to handle Firestore serialization
     private double latitude;
     private double longitude;
+    private String snippet;
+    private List<String> comments = new ArrayList<>();
+    private int upvotes = 0;
+
+    @com.google.firebase.firestore.Exclude
+    private Long commentsCount; // Temporary field to handle legacy data
+
+    public void setCommentsCount(Long count) {
+        this.commentsCount = count;
+        if (this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
+        // Convert legacy Long comments count to empty comment list
+        if (count != null && (this.comments == null || this.comments.isEmpty())) {
+            this.comments = new ArrayList<>();
+        }
+    }
+
+    @com.google.firebase.firestore.PropertyName("comments")
+    public void setCommentsFromFirestore(Object commentsObj) {
+        if (commentsObj instanceof List) {
+            this.comments = (List<String>) commentsObj;
+        } else if (commentsObj instanceof Long) {
+            this.commentsCount = (Long) commentsObj;
+            this.comments = new ArrayList<>();
+        } else {
+            this.comments = new ArrayList<>();
+        }
+    }
 
     public Report() {
         // Required empty constructor for Firestore
@@ -77,7 +108,27 @@ public class Report implements ClusterItem {
 
     @Override
     public String getSnippet() {
-        return description;
+        return snippet;
+    }
+
+    public void setSnippet(String snippet) {
+        this.snippet = snippet;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+
+    public int getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
     }
 
     // Getters and setters

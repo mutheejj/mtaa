@@ -6,6 +6,15 @@
     android:background="?attr/colorPrimary"
     android:elevation="4dp">
 
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_back" />
+
     <TextView
         android:id="@+id/toolbarTitle"
         android:layout_width="wrap_content"
@@ -14,4 +23,4 @@
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
-</androidx.appcompat.widget.Toolbar> 
+</androidx.appcompat.widget.Toolbar>

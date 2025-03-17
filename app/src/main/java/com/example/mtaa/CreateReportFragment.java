@@ -365,23 +365,33 @@ public class CreateReportFragment extends Fragment implements OnMapReadyCallback
     }
 
     private void setupDriveService(GoogleSignInAccount account) {
-        executor.execute(() -> {
-            GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
-                requireContext(),
-                Collections.singleton(DriveScopes.DRIVE_FILE)
-            );
-            credential.setSelectedAccount(account.getAccount());
+        if (account == null) {
+            Toast.makeText(requireContext(), "Google Sign In required", Toast.LENGTH_LONG).show();
+            binding.submitButton.setEnabled(true);
+            return;
+        }
 
-            driveService = new Drive.Builder(
-                AndroidHttp.newCompatibleTransport(),
-                new GsonFactory(),
-                credential)
-                .setApplicationName("MTAA App")
-                .build();
-        });
+        GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
+            requireContext(),
+            Collections.singleton(DriveScopes.DRIVE_FILE)
+        );
+        credential.setSelectedAccount(account.getAccount());
+
+        driveService = new Drive.Builder(
+            AndroidHttp.newCompatibleTransport(),
+            new GsonFactory(),
+            credential)
+            .setApplicationName("MTAA App")
+            .build();
     }
 
     private void uploadImageAndCreateReport(String title, String description, String category) {
+        if (driveService == null) {
+            Toast.makeText(requireContext(), "Google Drive service not initialized. Please try again.", Toast.LENGTH_LONG).show();
+            binding.submitButton.setEnabled(true);
+            return;
+        }
+
         if (selectedImageUri != null) {
             try {
                 ContentResolver contentResolver = requireContext().getContentResolver();

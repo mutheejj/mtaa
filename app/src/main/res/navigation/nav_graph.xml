@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_adminLoginFragment"
+            app:destination="@id/adminLoginFragment" />
     </fragment>
 
     <fragment
@@ -94,6 +97,9 @@
         <action
             android:id="@+id/action_homeFragment_to_responsesFragment"
             app:destination="@id/responsesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -157,5 +163,24 @@
         android:id="@+id/notificationsFragment"
         android:name="com.example.mtaa.NotificationsFragment"
         android:label="NotificationsFragment" />
+
+    <fragment
+        android:id="@+id/adminLoginFragment"
+        android:name="com.example.mtaa.AdminLoginFragment"
+        android:label="AdminLoginFragment">
+        <action
+            android:id="@+id/action_adminLoginFragment_to_adminDashboardFragment"
+            app:destination="@id/adminDashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.example.mtaa.AdminDashboardFragment"
+        android:label="AdminDashboardFragment" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.mtaa.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

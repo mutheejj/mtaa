@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +26,9 @@ public class TrendingFragment extends Fragment {
     private List<Report> reportList;
     private FirebaseFirestore db;
     private TabLayout tabLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ShimmerFrameLayout shimmerLayout;
+    private TextView emptyView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,14 +42,36 @@ public class TrendingFragment extends Fragment {
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Trending Reports");
 
+        initializeViews(view);
+        setupSwipeRefresh();
+        setupRecyclerView();
+        setupTabLayout();
+
+        db = FirebaseFirestore.getInstance();
+        loadTrendingReports(0); // Load today's trending reports by default
+    }
+
+    private void initializeViews(View view) {
         recyclerView = view.findViewById(R.id.trending_recycler_view);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        shimmerLayout = view.findViewById(R.id.shimmer_layout);
+        emptyView = view.findViewById(R.id.empty_view);
+        tabLayout = view.findViewById(R.id.tab_layout);
+    }
+
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(() -> loadTrendingReports(tabLayout.getSelectedTabPosition()));
+        swipeRefreshLayout.setColorSchemeResources(R.color.text_primary);
+    }
+
+    private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        
         reportList = new ArrayList<>();
         ReportAdapter adapter = new ReportAdapter(reportList);
         recyclerView.setAdapter(adapter);
+    }
 
-        tabLayout = view.findViewById(R.id.tab_layout);
+    private void setupTabLayout() {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -55,12 +84,14 @@ public class TrendingFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-        db = FirebaseFirestore.getInstance();
-        loadTrendingReports(0); // Load today's trending reports by default
     }
 
     private void loadTrendingReports(int tabPosition) {
+        shimmerLayout.setVisibility(View.VISIBLE);
+        shimmerLayout.startShimmer();
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -84,6 +115,8 @@ public class TrendingFragment extends Fragment {
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
+                        showError("Failed to load trending reports");
+                        updateViewsOnError();
                         return;
                     }
 
@@ -95,7 +128,38 @@ public class TrendingFragment extends Fragment {
                             reportList.add(report);
                         }
                     }
-                    recyclerView.getAdapter().notifyDataSetChanged();
+
+                    updateViewsOnSuccess();
                 });
     }
-}
+
+    private void updateViewsOnSuccess() {
+        shimmerLayout.stopShimmer();
+        shimmerLayout.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
+
+        if (reportList.isEmpty()) {
+            emptyView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    private void updateViewsOnError() {
+        shimmerLayout.stopShimmer();
+        shimmerLayout.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+        emptyView.setText("Failed to load trending reports");
+    }
+
+    private void showError(String message) {
+        if (getContext() != null) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+    }

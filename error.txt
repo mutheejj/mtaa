@@ -1,0 +1,213 @@
+---------------------------- PROCESS STARTED (12615) for package com.example.mtaa ----------------------------
+2025-03-18 00:55:54.384 12615-12615 om.example.mta          com.example.mtaa                     I  The ClassLoaderContext is a special shared library.
+2025-03-18 00:55:55.767 12615-12615 LoadedApk               com.example.mtaa                     I  No resource references to update in package com.transsion.theme.icon
+2025-03-18 00:55:55.771 12615-12615 NetworkSecurityConfig   com.example.mtaa                     D  No Network Security Config specified, using platform default
+2025-03-18 00:55:55.773 12615-12615 NetworkSecurityConfig   com.example.mtaa                     D  No Network Security Config specified, using platform default
+2025-03-18 00:55:55.779 12615-12615 libc                    com.example.mtaa                     E  Access denied finding property "ro.vendor.pref_scale_resolution"
+2025-03-18 00:55:55.888 12615-12615 FirebaseApp             com.example.mtaa                     I  Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+2025-03-18 00:55:55.911 12615-12615 FirebaseInitProvider    com.example.mtaa                     I  FirebaseApp initialization successful
+2025-03-18 00:55:55.919 12615-12670 AppTurboFactory         com.example.mtaa                     D  AppTurboFactory new
+2025-03-18 00:55:55.922 12615-12670 AppTurboService         com.example.mtaa                     D  mTidEnabled false
+2025-03-18 00:55:55.997 12615-12677 libMEOW                 com.example.mtaa                     D  meow reload base cfg path: na
+2025-03-18 00:55:55.997 12615-12677 libMEOW                 com.example.mtaa                     D  meow reload overlay cfg path: na
+2025-03-18 00:55:56.010 12615-12677 libMEOW_gift            com.example.mtaa                     I  open /data/performance/gift/arc.ini
+2025-03-18 00:55:56.010 12615-12677 libMEOW                 com.example.mtaa                     D  applied 1 plugins for [com.example.mtaa]:
+2025-03-18 00:55:56.010 12615-12677 libMEOW                 com.example.mtaa                     D    plugin 1: [libMEOW_gift.so]:
+2025-03-18 00:55:56.061 12615-12615 ActivityThread          com.example.mtaa                     D  ++ activityComponent:com.example.mtaa/com.example.mtaa.MainActivity counts:null
+2025-03-18 00:55:56.061 12615-12615 Applicatio...ageManager com.example.mtaa                     D  [getText] isMxtcMarket: false
+2025-03-18 00:55:56.141 12615-12615 AppCompatDelegate       com.example.mtaa                     D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2025-03-18 00:55:56.148 12615-12615 AppTurboService         com.example.mtaa                     D  AppTurboService.initializeAppTurboFactory()
+2025-03-18 00:55:56.270 12615-12615 AppTurboService         com.example.mtaa                     D  initialize
+2025-03-18 00:55:56.272 12615-12615 AppTurboService         com.example.mtaa                     D   mAppTurboTouchSlop = 0 mIsTpTurboApp = false
+2025-03-18 00:55:56.272 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+2025-03-18 00:55:56.274 12615-12615 AppTurboService         com.example.mtaa                     D  YvelocityContentObserver new : super null
+2025-03-18 00:55:56.278 12615-12615 AppTurboService         com.example.mtaa                     D  versionName 1.0
+2025-03-18 00:55:56.280 12615-12615 os.SingleLice           com.example.mtaa                     D  instance successfully. com.transsion.scrollshot.v1.ScrollShotImplLice@df7ef9a from com.transsion.scrollshot.ScrollShotImplLiceFactory
+2025-03-18 00:55:56.280 12615-12615 os.SingleLiceFactory    com.example.mtaa                     D  instance successfully. com.transsion.scrollshot.v1.ScrollShotImplLice@df7ef9a from android.view.IViewLice
+2025-03-18 00:55:56.281 12615-12615 os.LiceInfo             com.example.mtaa                     D  instance successfully. com.transsion.view.ViewLice@8ae20cb from android.view.IViewLice
+2025-03-18 00:55:56.602 12615-12615 os.SingleLice           com.example.mtaa                     D  instance successfully. com.transsion.freeform.v1.FreeformLice@d7ca980 from com.transsion.freeform.FreeformLiceFactory
+2025-03-18 00:55:56.602 12615-12615 os.SingleLiceFactory    com.example.mtaa                     D  instance successfully. com.transsion.freeform.v1.FreeformLice@d7ca980 from com.android.internal.IInternalViewLice
+2025-03-18 00:55:56.603 12615-12615 os.SingleLice           com.example.mtaa                     D  instance successfully. com.transsion.whitenavigation.v1.WhiteNavigationLice@2b95bb9 from com.transsion.whitenavigation.WhiteNavigationLiceFactory
+2025-03-18 00:55:56.603 12615-12615 os.SingleLiceFactory    com.example.mtaa                     D  instance successfully. com.transsion.whitenavigation.v1.WhiteNavigationLice@2b95bb9 from com.android.internal.IInternalViewLice
+2025-03-18 00:55:56.603 12615-12615 os.LiceInfo             com.example.mtaa                     D  instance successfully. com.transsion.internal.InternalViewLice@cf49bfe from com.android.internal.IInternalViewLice
+2025-03-18 00:55:56.635 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+2025-03-18 00:55:56.729 12615-12615 om.example.mta          com.example.mtaa                     W  Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+2025-03-18 00:55:56.731 12615-12615 om.example.mta          com.example.mtaa                     W  Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2025-03-18 00:55:56.861 12615-12615 FirebaseAuth            com.example.mtaa                     D  Notifying id token listeners about user ( bzdPVO2NyoZU2eVs8dUf5hz6M2z2 ).
+2025-03-18 00:55:56.879 12615-12683 ActivityThreadLice      com.example.mtaa                     D  received OSMessage 110001
+2025-03-18 00:55:56.880 12615-12683 ActivityThreadLice      com.example.mtaa                     D  send OSMessage 110001 to [-1]
+2025-03-18 00:55:56.635 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+2025-03-18 00:55:56.882 12615-12683 OSServiceManager        com.example.mtaa                     D  update local os service os.activity from null to android.os.BinderProxy@e4fb06b
+2025-03-18 00:55:57.054 12615-12615 om.example.mta          com.example.mtaa                     I  The ClassLoaderContext is a special shared library.
+2025-03-18 00:55:57.057 12615-12615 SurfaceFactory          com.example.mtaa                     I  [static] sSurfaceFactory = com.transsion.rt.SurfaceFactoryImpl@8343ef
+2025-03-18 00:55:57.075 12615-12615 ViewRootIm...nActivity] com.example.mtaa                     D  hardware acceleration = true , fakeHwAccelerated = false, sRendererDisabled = false, forceHwAccelerated = false, sSystemRendererDisabled = false
+2025-03-18 00:55:57.085 12615-12615 libMEOW                 com.example.mtaa                     D  applied 1 plugins for [com.example.mtaa]:
+2025-03-18 00:55:57.085 12615-12615 libMEOW                 com.example.mtaa                     D    plugin 1: [libMEOW_gift.so]:
+2025-03-18 00:55:57.086 12615-12615 InputTransport          com.example.mtaa                     I  Create ARC handle: 0xb400007759ba5970
+2025-03-18 00:55:57.087 12615-12615 InputTransport          com.example.mtaa                     I  InputConsumer create TRAN_APPTURBO_ENABLE disable
+2025-03-18 00:55:57.089 12615-12615 PhoneWindow             com.example.mtaa                     V  DecorView setVisiblity: visibility = 0, Parent = android.view.ViewRootImpl@76a300b, this = DecorView@65bfee8[MainActivity]
+2025-03-18 00:55:57.095 12615-12615 Choreographer           com.example.mtaa                     I  Skipped 104 frames!  The application may be doing too much work on its main thread.
+2025-03-18 00:55:57.188 12615-12675 libMEOW                 com.example.mtaa                     D  applied 1 plugins for [com.example.mtaa]:
+2025-03-18 00:55:57.189 12615-12675 libMEOW                 com.example.mtaa                     D    plugin 1: [libMEOW_gift.so]:
+2025-03-18 00:55:57.205 12615-12675 libMEOW_gift            com.example.mtaa                     I  ctx:0xb4000077a9a95cb0, ARC not Enabled.
+2025-03-18 00:55:57.257 12615-12675 ion                     com.example.mtaa                     E  ioctl c0044901 failed with code -1: Invalid argument
+2025-03-18 00:55:57.298 12615-12675 OpenGLRenderer          com.example.mtaa                     I  Davey! duration=1352ms; Flags=1, IntendedVsync=403299834146502, Vsync=403300989702046, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=403300992556421, AnimationStart=403300992566959, PerformTraversalsStart=403300993086574, DrawStart=403301111585190, SyncQueued=403301147593728, SyncStart=403301155090344, IssueDrawCommandsStart=403301155258651, SwapBuffers=403301191807344, FrameCompleted=403301193812959, DequeueBufferDuration=0, QueueBufferDuration=964769, GpuCompleted=0, 
+2025-03-18 00:55:58.897 12615-12615 Choreographer           com.example.mtaa                     I  Skipped 39 frames!  The application may be doing too much work on its main thread.
+2025-03-18 00:55:59.651 12615-12615 AssistStructure         com.example.mtaa                     I  Flattened final assist data: 3164 bytes, containing 1 windows, 19 views
+2025-03-18 00:56:01.221 12615-12615 PhoneWindow             com.example.mtaa                     V  DecorView setVisiblity: visibility = 0, Parent = android.view.ViewRootImpl@76a300b, this = DecorView@65bfee8[MainActivity]
+2025-03-18 00:56:01.792 12615-12615 FirebaseAuth            com.example.mtaa                     I  Logging in as johnmuthee547@gmail.com with empty reCAPTCHA token
+2025-03-18 00:56:01.815 12615-12743 System                  com.example.mtaa                     W  Ignoring header X-Firebase-Locale because its value was null.
+2025-03-18 00:56:01.844 12615-12745 System.out              com.example.mtaa                     I  [okhttp]:check permission begin!
+2025-03-18 00:56:01.846 12615-12745 System                  com.example.mtaa                     W  ClassLoader referenced unknown path: system/framework/mediatek-cta.jar
+2025-03-18 00:56:01.848 12615-12745 System.out              com.example.mtaa                     I  [okhttp] e:java.lang.ClassNotFoundException: com.mediatek.cta.CtaUtils
+2025-03-18 00:56:01.854 12615-12745 System.out              com.example.mtaa                     I  [socket]:check permission begin!
+2025-03-18 00:56:01.856 12615-12745 System                  com.example.mtaa                     W  ClassLoader referenced unknown path: system/framework/mediatek-cta.jar
+2025-03-18 00:56:01.858 12615-12745 System.out              com.example.mtaa                     I  [socket] e:java.lang.ClassNotFoundException: com.mediatek.cta.CtaUtils
+2025-03-18 00:56:02.140 12615-12745 System.out              com.example.mtaa                     I  [OkHttp] sendRequest<<
+2025-03-18 00:56:02.266 12615-12743 LocalRequestInterceptor com.example.mtaa                     W  Error getting App Check token; using placeholder token instead. Error: com.google.firebase.FirebaseException: Error returned from API. code: 403 body: Firebase App Check API has not been used in project 551391837692 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/firebaseappcheck.googleapis.com/overview?project=551391837692 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+2025-03-18 00:56:02.268 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:check permission begin!
+2025-03-18 00:56:02.269 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:not MMS!
+2025-03-18 00:56:02.269 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:not Email!
+2025-03-18 00:56:02.327 12615-12743 System.out              com.example.mtaa                     I  [socket]:check permission begin!
+2025-03-18 00:56:02.386 12615-12634 System                  com.example.mtaa                     W  A resource failed to call close. 
+2025-03-18 00:56:02.388 12615-12634 Parcel                  com.example.mtaa                     W  release_object BINDER_TYPE_HANDLE strongCount==2
+2025-03-18 00:56:02.388 12615-12634 Parcel                  com.example.mtaa                     W  release_object BINDER_TYPE_HANDLE strongCount==2
+2025-03-18 00:56:02.427 12615-12755 ProfileInstaller        com.example.mtaa                     D  Installing profile for com.example.mtaa
+2025-03-18 00:56:02.623 12615-12743 System.out              com.example.mtaa                     I  [OkHttp] sendRequest<<
+2025-03-18 00:56:02.995 12615-12743 System                  com.example.mtaa                     W  Ignoring header X-Firebase-Locale because its value was null.
+2025-03-18 00:56:03.014 12615-12743 LocalRequestInterceptor com.example.mtaa                     W  Error getting App Check token; using placeholder token instead. Error: com.google.firebase.FirebaseException: Too many attempts.
+2025-03-18 00:56:03.018 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:check permission begin!
+2025-03-18 00:56:03.019 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:not MMS!
+2025-03-18 00:56:03.019 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:not Email!
+2025-03-18 00:56:03.024 12615-12743 System.out              com.example.mtaa                     I  [OkHttp] sendRequest<<
+2025-03-18 00:56:03.329 12615-12743 FirebaseAuth            com.example.mtaa                     D  Notifying id token listeners about user ( bzdPVO2NyoZU2eVs8dUf5hz6M2z2 ).
+2025-03-18 00:56:03.535 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+2025-03-18 00:56:03.641 12615-12615 ion                     com.example.mtaa                     E  ioctl c0044901 failed with code -1: Invalid argument
+2025-03-18 00:56:04.125 12615-12666 DynamiteModule          com.example.mtaa                     W  Local module descriptor class for com.google.android.gms.providerinstaller.dynamite not found.
+2025-03-18 00:56:04.143 12615-12666 DynamiteModule          com.example.mtaa                     I  Considering local module com.google.android.gms.providerinstaller.dynamite:0 and remote module com.google.android.gms.providerinstaller.dynamite:0
+2025-03-18 00:56:04.143 12615-12666 ProviderInstaller       com.example.mtaa                     W  Failed to load providerinstaller module: No acceptable module com.google.android.gms.providerinstaller.dynamite found. Local version is 0 and remote version is 0.
+2025-03-18 00:56:04.164 12615-12760 TetheringManager        com.example.mtaa                     I  registerTetheringEventCallback:com.example.mtaa
+2025-03-18 00:56:04.181 12615-12666 om.example.mta          com.example.mtaa                     I  The ClassLoaderContext is a special shared library.
+2025-03-18 00:56:04.222 12615-12615 Choreographer           com.example.mtaa                     I  Skipped 74 frames!  The application may be doing too much work on its main thread.
+2025-03-18 00:56:04.233 12615-12666 ProviderInstaller       com.example.mtaa                     W  Failed to report request stats: com.google.android.gms.common.security.ProviderInstallerImpl.reportRequestStats [class android.content.Context, long, long]
+2025-03-18 00:56:04.263 12615-12666 NativeCrypto            com.example.mtaa                     V  Registering com/google/android/gms/org/conscrypt/NativeCrypto's 308 native methods...
+2025-03-18 00:56:03.882 12615-12615 chatty                  com.example.mtaa                     I  uid=10364(com.example.mtaa) identical 8 lines
+2025-03-18 00:56:03.882 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+2025-03-18 00:56:04.291 12615-12765 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (greylist, reflection, allowed)
+2025-03-18 00:56:04.340 12615-12666 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ljava/security/spec/ECParameterSpec;->getCurveName()Ljava/lang/String; (greylist, reflection, allowed)
+2025-03-18 00:56:04.410 12615-12666 ProviderInstaller       com.example.mtaa                     I  Installed default security provider GmsCore_OpenSSL
+2025-03-18 00:56:04.468 12615-12615 RecyclerView            com.example.mtaa                     E  No adapter attached; skipping layout
+2025-03-18 00:56:04.587 12615-12615 Choreographer           com.example.mtaa                     I  Skipped 32 frames!  The application may be doing too much work on its main thread.
+2025-03-18 00:56:04.614 12615-12675 OpenGLRenderer          com.example.mtaa                     I  Davey! duration=1223ms; Flags=1, IntendedVsync=403307286263309, Vsync=403308108485523, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=403308119385806, AnimationStart=403308119403190, PerformTraversalsStart=403308123201882, DrawStart=403308382652190, SyncQueued=403308472649652, SyncStart=403308473300344, IssueDrawCommandsStart=403308474272652, SwapBuffers=403308508942883, FrameCompleted=403308510596113, DequeueBufferDuration=447231, QueueBufferDuration=783154, GpuCompleted=0, 
+2025-03-18 00:56:04.621 12615-12615 IInputConnectionWrapper com.example.mtaa                     W  requestCursorAnchorInfo on inactive InputConnection
+2025-03-18 00:56:04.630 12615-12764 GoogleApiManager        com.example.mtaa                     E  Failed to get service from broker. 
+                                                                                                    java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
+                                                                                                    	at android.os.Parcel.createExceptionOrNull(Parcel.java:2374)
+                                                                                                    	at android.os.Parcel.createException(Parcel.java:2358)
+                                                                                                    	at android.os.Parcel.readException(Parcel.java:2341)
+                                                                                                    	at android.os.Parcel.readException(Parcel.java:2283)
+                                                                                                    	at areh.a(:com.google.android.gms@250832022@25.08.32 (150400-731361394):36)
+                                                                                                    	at arco.z(:com.google.android.gms@250832022@25.08.32 (150400-731361394):150)
+                                                                                                    	at aqjy.run(:com.google.android.gms@250832022@25.08.32 (150400-731361394):54)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:938)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:99)
+                                                                                                    	at bxil.lP(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1)
+                                                                                                    	at bxil.dispatchMessage(:com.google.android.gms@250832022@25.08.32 (150400-731361394):5)
+                                                                                                    	at android.os.Looper.loop(Looper.java:268)
+                                                                                                    	at android.os.HandlerThread.run(HandlerThread.java:67)
+2025-03-18 00:56:04.646 12615-12763 CondFlagRegistrar       com.example.mtaa                     W  Failed to register com.google.android.gms.providerinstaller#com.google.android.gms
+                                                                                                    dznz: 17: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null}
+                                                                                                    	at dzob.a(:com.google.android.gms@250832022@25.08.32 (150400-731361394):13)
+                                                                                                    	at eseh.d(:com.google.android.gms@250832022@25.08.32 (150400-731361394):3)
+                                                                                                    	at esej.run(:com.google.android.gms@250832022@25.08.32 (150400-731361394):130)
+                                                                                                    	at esgp.execute(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1)
+                                                                                                    	at esez.h(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1)
+                                                                                                    	at esez.l(:com.google.android.gms@250832022@25.08.32 (150400-731361394):101)
+                                                                                                    	at esez.p(:com.google.android.gms@250832022@25.08.32 (150400-731361394):19)
+                                                                                                    	at dsfy.ht(:com.google.android.gms@250832022@25.08.32 (150400-731361394):35)
+                                                                                                    	at dipx.run(:com.google.android.gms@250832022@25.08.32 (150400-731361394):14)
+                                                                                                    	at esgp.execute(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1)
+                                                                                                    	at dipy.b(:com.google.android.gms@250832022@25.08.32 (150400-731361394):18)
+                                                                                                    	at diqn.b(:com.google.android.gms@250832022@25.08.32 (150400-731361394):36)
+                                                                                                    	at diqp.d(:com.google.android.gms@250832022@25.08.32 (150400-731361394):25)
+                                                                                                    	at aqhg.c(:com.google.android.gms@250832022@25.08.32 (150400-731361394):9)
+                                                                                                    	at aqjw.q(:com.google.android.gms@250832022@25.08.32 (150400-731361394):48)
+                                                                                                    	at aqjw.d(:com.google.android.gms@250832022@25.08.32 (150400-731361394):10)
+                                                                                                    	at aqjw.g(:com.google.android.gms@250832022@25.08.32 (150400-731361394):211)
+                                                                                                    	at aqjw.onConnectionFailed(:com.google.android.gms@250832022@25.08.32 (150400-731361394):2)
+                                                                                                    	at aqjy.run(:com.google.android.gms@250832022@25.08.32 (150400-731361394):82)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:938)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:99)
+                                                                                                    	at bxil.lP(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1)
+                                                                                                    	at bxil.dispatchMessage(:com.google.android.gms@250832022@25.08.32 (150400-731361394):5)
+                                                                                                    	at android.os.Looper.loop(Looper.java:268)
+                                                                                                    	at android.os.HandlerThread.run(HandlerThread.java:67)
+                                                                                                    Caused by: aqfy: 17: API: Phenotype.API is not available on this device. Connection failed with: ConnectionResult{statusCode=DEVELOPER_ERROR, resolution=null, message=null}
+                                                                                                    	at arca.a(:com.google.android.gms@250832022@25.08.32 (150400-731361394):15)
+                                                                                                    	at aqhj.a(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1)
+                                                                                                    	at aqhg.c(:com.google.android.gms@250832022@25.08.32 (150400-731361394):5)
+                                                                                                    	at aqjw.q(:com.google.android.gms@250832022@25.08.32 (150400-731361394):48) 
+                                                                                                    	at aqjw.d(:com.google.android.gms@250832022@25.08.32 (150400-731361394):10) 
+                                                                                                    	at aqjw.g(:com.google.android.gms@250832022@25.08.32 (150400-731361394):211) 
+                                                                                                    	at aqjw.onConnectionFailed(:com.google.android.gms@250832022@25.08.32 (150400-731361394):2) 
+                                                                                                    	at aqjy.run(:com.google.android.gms@250832022@25.08.32 (150400-731361394):82) 
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:938) 
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:99) 
+                                                                                                    	at bxil.lP(:com.google.android.gms@250832022@25.08.32 (150400-731361394):1) 
+                                                                                                    	at bxil.dispatchMessage(:com.google.android.gms@250832022@25.08.32 (150400-731361394):5) 
+                                                                                                    	at android.os.Looper.loop(Looper.java:268) 
+                                                                                                    	at android.os.HandlerThread.run(HandlerThread.java:67) 
+2025-03-18 00:56:04.988 12615-12775 System.out              com.example.mtaa                     I  [socket]:check permission begin!
+2025-03-18 00:56:05.005 12615-12775 om.example.mta          com.example.mtaa                     W  Accessing hidden field Ljava/net/Socket;->impl:Ljava/net/SocketImpl; (greylist, reflection, allowed)
+2025-03-18 00:56:05.007 12615-12775 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ldalvik/system/CloseGuard;->get()Ldalvik/system/CloseGuard; (greylist,core-platform-api, linking, allowed)
+2025-03-18 00:56:05.018 12615-12775 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ldalvik/system/CloseGuard;->open(Ljava/lang/String;)V (greylist,core-platform-api, linking, allowed)
+2025-03-18 00:56:05.175 12615-12775 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ljava/security/spec/ECParameterSpec;->setCurveName(Ljava/lang/String;)V (greylist, reflection, allowed)
+2025-03-18 00:56:05.226 12615-12775 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ldalvik/system/BlockGuard;->getThreadPolicy()Ldalvik/system/BlockGuard$Policy; (greylist,core-platform-api, linking, allowed)
+2025-03-18 00:56:05.226 12615-12775 om.example.mta          com.example.mtaa                     W  Accessing hidden method Ldalvik/system/BlockGuard$Policy;->onNetwork()V (greylist, linking, allowed)
+2025-03-18 00:56:05.252 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:check permission begin!
+2025-03-18 00:56:05.253 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:not MMS!
+2025-03-18 00:56:05.253 12615-12743 System.out              com.example.mtaa                     I  [okhttp]:not Email!
+2025-03-18 00:56:05.262 12615-12743 System.out              com.example.mtaa                     I  [socket]:check permission begin!
+2025-03-18 00:56:05.472 12615-12743 System.out              com.example.mtaa                     I  [OkHttp] sendRequest<<
+2025-03-18 00:56:05.768 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+2025-03-18 00:56:06.301 12615-12760 Firestore               com.example.mtaa                     W  (24.10.2) [Firestore]: Listen for Query(target=Query(activities where userId==bzdPVO2NyoZU2eVs8dUf5hz6M2z2 order by -timestamp, -__name__);limitType=LIMIT_TO_FIRST) failed: Status{code=FAILED_PRECONDITION, description=The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/mtaa-7a476/firestore/indexes?create_composite=Ck1wcm9qZWN0cy9tdGFhLTdhNDc2L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9hY3Rpdml0aWVzL2luZGV4ZXMvXxABGgoKBnVzZXJJZBABGg0KCXRpbWVzdGFtcBACGgwKCF9fbmFtZV9fEAI, cause=null}
+2025-03-18 00:56:06.314 12615-12760 Firestore               com.example.mtaa                     W  (24.10.2) [Firestore]: Listen for Query(target=Query(achievements where userId==bzdPVO2NyoZU2eVs8dUf5hz6M2z2 order by -unlockedAt, -__name__);limitType=LIMIT_TO_FIRST) failed: Status{code=FAILED_PRECONDITION, description=The query requires an index. You can create it here: https://console.firebase.google.com/v1/r/project/mtaa-7a476/firestore/indexes?create_composite=Ck9wcm9qZWN0cy9tdGFhLTdhNDc2L2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9hY2hpZXZlbWVudHMvaW5kZXhlcy9fEAEaCgoGdXNlcklkEAEaDgoKdW5sb2NrZWRBdBACGgwKCF9fbmFtZV9fEAI, cause=null}
+2025-03-18 00:56:07.214 12615-12615 AndroidRuntime          com.example.mtaa                     D  Shutting down VM
+2025-03-18 00:56:07.217 12615-12615 AndroidRuntime          com.example.mtaa                     E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.mtaa, PID: 12615
+                                                                                                    java.lang.NullPointerException: Attempt to invoke virtual method 'void android.widget.TextView.setVisibility(int)' on a null object reference
+                                                                                                    	at com.example.mtaa.ReportsFragment.loadReports(ReportsFragment.java:77)
+                                                                                                    	at com.example.mtaa.ReportsFragment.onViewCreated(ReportsFragment.java:47)
+                                                                                                    	at androidx.fragment.app.Fragment.performViewCreated(Fragment.java:3147)
+                                                                                                    	at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:588)
+                                                                                                    	at androidx.fragment.app.FragmentStateManager.moveToExpectedState(FragmentStateManager.java:272)
+                                                                                                    	at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:1943)
+                                                                                                    	at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:1845)
+                                                                                                    	at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:1782)
+                                                                                                    	at androidx.fragment.app.FragmentManager$5.run(FragmentManager.java:565)
+                                                                                                    	at android.os.Handler.handleCallback(Handler.java:938)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:99)
+                                                                                                    	at android.os.Looper.loop(Looper.java:268)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:8046)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:627)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:997)
+2025-03-18 00:56:07.217 12615-12615 ExceptionHandle         com.example.mtaa                     I  at com.example.mtaa.ReportsFragment.loadReports(ReportsFragment.java:77)
+2025-03-18 00:56:07.217 12615-12615 ExceptionHandle         com.example.mtaa                     I  at com.example.mtaa.ReportsFragment.onViewCreated(ReportsFragment.java:47)
+2025-03-18 00:56:07.217 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.Fragment.performViewCreated(Fragment.java:3147)
+2025-03-18 00:56:07.217 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.FragmentStateManager.createView(FragmentStateManager.java:588)
+2025-03-18 00:56:07.217 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.FragmentStateManager.moveToExpectedState(FragmentStateManager.java:272)
+2025-03-18 00:56:07.217 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.FragmentManager.executeOpsTogether(FragmentManager.java:1943)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.FragmentManager.removeRedundantOperationsAndExecute(FragmentManager.java:1845)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.FragmentManager.execPendingActions(FragmentManager.java:1782)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at androidx.fragment.app.FragmentManager$5.run(FragmentManager.java:565)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at android.os.Handler.handleCallback(Handler.java:938)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at android.os.Handler.dispatchMessage(Handler.java:99)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at android.os.Looper.loop(Looper.java:268)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at android.app.ActivityThread.main(ActivityThread.java:8046)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at java.lang.reflect.Method.invoke(Native Method)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:627)
+2025-03-18 00:56:07.218 12615-12615 ExceptionHandle         com.example.mtaa                     I  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:997)
+2025-03-18 00:56:07.196 12615-12615 chatty                  com.example.mtaa                     I  uid=10364(com.example.mtaa) identical 1 line
+2025-03-18 00:56:07.197 12615-12615 AppTurboService         com.example.mtaa                     D   getSettingSupport resullt = true mSettingCloudEnable = true
+---------------------------- PROCESS ENDED (12615) for package com.example.mtaa ----------------------------

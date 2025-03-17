@@ -27,6 +27,10 @@ public class Report implements ClusterItem {
 
     public Report() {
         // Required empty constructor for Firestore
+        this.upvotes = 0;
+        this.comments = 0;
+        this.status = "pending";
+        this.createdAt = new Date();
     }
 
     public Report(String userId, String title, String description, String category,
@@ -112,7 +116,12 @@ public class Report implements ClusterItem {
 
     @Override
     public LatLng getPosition() {
-        return location != null ? new LatLng(location.getLatitude(), location.getLongitude()) : null;
+        if (location != null) {
+            return new LatLng(location.getLatitude(), location.getLongitude());
+        } else if (latitude != 0 && longitude != 0) {
+            return new LatLng(latitude, longitude);
+        }
+        return null;
     }
 
     @Override

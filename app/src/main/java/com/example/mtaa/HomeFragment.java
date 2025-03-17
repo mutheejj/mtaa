@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         );
 
         binding.cardSettings.setOnClickListener(v -> 
-            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_profileFragment)
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_settingsFragment)
         );
 
         binding.fabReport.setOnClickListener(v -> 

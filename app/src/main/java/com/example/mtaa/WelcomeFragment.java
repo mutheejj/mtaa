@@ -20,6 +20,9 @@ public class WelcomeFragment extends Fragment {
         view.findViewById(R.id.btnCreateAccount).setOnClickListener(v ->
             Navigation.findNavController(v).navigate(R.id.action_welcomeFragment_to_createAccountFragment));
 
+        view.findViewById(R.id.btnOfficials).setOnClickListener(v ->
+            Navigation.findNavController(v).navigate(R.id.action_welcomeFragment_to_adminLoginFragment));
+
         return view;
     }
-} 
+}
