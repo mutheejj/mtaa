@@ -44,7 +44,7 @@ public class OfficialFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.responses_recycler_view);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         progressBar = view.findViewById(R.id.progressBar);
         emptyView = view.findViewById(R.id.emptyView);

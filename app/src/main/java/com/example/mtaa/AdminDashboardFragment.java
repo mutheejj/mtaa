@@ -8,7 +8,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -16,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.mtaa.adapters.ReportAdapter;
 import com.example.mtaa.models.Report;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -24,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDashboardFragment extends Fragment {
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private MaterialToolbar toolbar;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Report> reportList;
@@ -40,14 +48,59 @@ public class AdminDashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("Admin Dashboard");
-
+        setupViews(view);
+        setupDrawer();
         setupFirebase();
         checkAdminAccess();
         setupRecyclerView(view);
         setupSwipeRefresh(view);
         loadAllReports();
+    }
+
+    private void setupViews(View view) {
+        toolbar = view.findViewById(R.id.toolbar);
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        navigationView = view.findViewById(R.id.nav_view);
+        
+        toolbar.setTitle("Admin Dashboard");
+    }
+
+    private void setupDrawer() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+            requireActivity(), 
+            drawerLayout, 
+            toolbar, 
+            R.string.navigation_drawer_open, 
+            R.string.navigation_drawer_close
+        );
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_dashboard) {
+                // Already on dashboard
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else if (itemId == R.id.nav_reports) {
+                // Navigate to reports
+                // TODO: Implement navigation
+            } else if (itemId == R.id.nav_users) {
+                // Navigate to users management
+                // TODO: Implement navigation
+            } else if (itemId == R.id.nav_analytics) {
+                // Navigate to analytics
+                // TODO: Implement navigation
+            } else if (itemId == R.id.nav_settings) {
+                // Navigate to settings
+                // TODO: Implement navigation
+            } else if (itemId == R.id.nav_logout) {
+                auth.signOut();
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_adminDashboardFragment_to_welcomeFragment);
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
     }
 
     private void setupFirebase() {

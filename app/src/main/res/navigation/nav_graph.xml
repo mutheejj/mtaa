@@ -179,7 +179,13 @@
     <fragment
         android:id="@+id/adminDashboardFragment"
         android:name="com.example.mtaa.AdminDashboardFragment"
-        android:label="AdminDashboardFragment" />
+        android:label="AdminDashboardFragment">
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"
