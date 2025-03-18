@@ -14,9 +14,11 @@ import java.util.Locale;
 public class ResponseAdapter extends RecyclerView.Adapter<ResponseAdapter.ResponseViewHolder> {
     private List<Response> responseList;
     private SimpleDateFormat dateFormat;
+    private boolean isOfficial;
 
-    public ResponseAdapter(List<Response> responseList) {
+    public ResponseAdapter(List<Response> responseList, boolean isOfficial) {
         this.responseList = responseList;
+        this.isOfficial = isOfficial;
         this.dateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
     }
 

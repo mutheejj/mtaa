@@ -100,6 +100,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_officialFragment"
+            app:destination="@id/officialFragment" />
     </fragment>
 
     <fragment
@@ -182,5 +185,10 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.mtaa.SettingsFragment"
         android:label="SettingsFragment" />
+
+    <fragment
+        android:id="@+id/officialFragment"
+        android:name="com.example.mtaa.OfficialFragment"
+        android:label="OfficialFragment" />
 
 </navigation>

@@ -69,7 +69,7 @@ public class ResponsesFragment extends Fragment {
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         responseList = new ArrayList<>();
-        ResponseAdapter adapter = new ResponseAdapter(responseList);
+        ResponseAdapter adapter = new ResponseAdapter(responseList, false);
         recyclerView.setAdapter(adapter);
     }
 

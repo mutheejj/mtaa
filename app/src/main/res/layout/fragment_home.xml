@@ -159,6 +159,39 @@
                 android:rowCount="3"
                 android:animateLayoutChanges="true">
 
+                <!-- Official Updates Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardOfficial"
+                    style="@style/HomeCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false">
+
+                    <LinearLayout
+                        style="@style/HomeCardContentStyle">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/official"
+                            android:scaleType="fitCenter"
+                            android:adjustViewBounds="true" />
+                        <TextView
+                            style="@style/HomeCardTitleStyle"
+                            android:text="Official Updates" />
+
+                        <TextView
+                            style="@style/HomeCardDescriptionStyle"
+                            android:text="View official responses" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
                 <!-- Report Issue Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardReportIssue"

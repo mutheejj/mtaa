@@ -25,6 +25,11 @@ public class Report implements ClusterItem {
     private String status;
     @ServerTimestamp
     private Date createdAt;
+    private float zindex;
+    private String comments;
+    private double latitude;
+    private String userName;
+    private String content;
 
     // Empty constructor required for Firestore
     public Report() {
@@ -95,6 +100,21 @@ public class Report implements ClusterItem {
     @Nullable
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(@Nullable Date createdAt) { this.createdAt = createdAt; }
+
+    public float getZindex() { return zindex; }
+    public void setZindex(float zindex) { this.zindex = zindex; }
+
+    public String getComments() { return comments != null ? comments : ""; }
+    public void setComments(String comments) { this.comments = comments; }
+
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+
+    public String getUserName() { return userName != null ? userName : ""; }
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getContent() { return content != null ? content : ""; }
+    public void setContent(String content) { this.content = content; }
 
     @Exclude
     public boolean isValid() {
