@@ -1,4 +1,4 @@
-package com.example.mtaa;
+package com.example.mtaa.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mtaa.R;
 import com.example.mtaa.models.Report;
 
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.Date;
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder> {
     private List<Report> reports;
     private SimpleDateFormat dateFormat;
-
     private boolean isAdminMode;
 
     public ReportAdapter(List<Report> reports, boolean isAdminMode) {
@@ -41,8 +41,17 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
         holder.descriptionText.setText(report.getDescription());
         holder.statusText.setText(report.getStatus());
         
-        String formattedDate = dateFormat.format(new Date(String.valueOf(report.getTimestamp())));
+        String formattedDate = dateFormat.format(new Date(report.getTimestamp()));
         holder.timestampText.setText(formattedDate);
+
+        // Show additional information in admin mode
+        if (isAdminMode) {
+            holder.categoryText.setVisibility(View.VISIBLE);
+            holder.statusText.setVisibility(View.VISIBLE);
+        } else {
+            holder.categoryText.setVisibility(View.GONE);
+            holder.statusText.setVisibility(View.GONE);
+        }
     }
 
     @Override

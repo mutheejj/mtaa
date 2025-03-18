@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mtaa.models.Report;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,7 +40,7 @@ public class MyReportsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         
         reportList = new ArrayList<>();
-        ReportAdapter adapter = new ReportAdapter(reportList);
+        ReportAdapter adapter = new ReportAdapter(reportList, false);
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();

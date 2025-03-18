@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.example.mtaa.models.Report;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
@@ -67,7 +69,7 @@ public class TrendingFragment extends Fragment {
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         reportList = new ArrayList<>();
-        ReportAdapter adapter = new ReportAdapter(reportList);
+        ReportAdapter adapter = new ReportAdapter(reportList, false);
         recyclerView.setAdapter(adapter);
     }
 
